@@ -42,32 +42,41 @@ Aaj ami amader website ebong database connection dekhabo."
 SCREEN: Open http://localhost:5000 - Show Homepage
 
 ============================================================
-PART 2: DATABASE SHOW (1:30 - 2:30)
+PART 2: DATABASE CONNECTION & CODE (1:30 - 2:30)
 ============================================================
 
 ENGLISH:
-"Now let me show you our database.
-We have created 6 tables in our database:
-1. University - stores university information
-2. Coordinator - stores coordinator details
-3. Exchange_Program - stores program details
-4. Student - stores student information
-5. Application - stores student applications
+"Now let me show you our database connection.
+Our website is built with Python Flask framework.
+The app.py file contains all the routes for our application.
+The db_config.py file connects to our Oracle database.
 
-All tables are connected with foreign keys."
+Let me show the code.
+This is our app.py file. You can see all the @app.route decorators.
+Each route reads data from the Oracle database and displays it.
+This is our db_config.py file. Here is the get_connection function.
+It connects to Oracle using cx_Oracle library.
+The connection string uses host, port, service name, username and password."
 
 BANGLA:
-"Ekhon ami amader database dekhabo.
-Amader database-e 6-ti table ache:
-1. University - bishwabidyaloyer tothyo songrokkhon kore
-2. Coordinator - coordinator-er tothyo songrokkhon kore
-3. Exchange_Program - program-er tothyo songrokkhon kore
-4. Student - chhatroder tothyo songrokkhon kore
-5. Application - chhatroder abedon songrokkhon kore
+"Ekhon ami amader database connection dekhabo.
+Amader website-ti Python Flask framework diye toiri.
+app.py file-e amader application-er shob route ache.
+db_config.py file amader Oracle database-ke connect kore.
 
-Shob table foreign key diye songjukto."
+Ami code dekhabo.
+Ei hocche amader app.py file. Dekhun shob @app.route decorator ache.
+Pratekta route Oracle database theke data read kore ebong display kore.
+Ei hocche db_config.py file. Ekhane get_connection function ache.
+Eti cx_Oracle library diye Oracle-ke connect kore.
+Connection string-e host, port, service name, username ebong password use hoy."
 
-SCREEN: Click "Database" link - Show all tables - Scroll down
+SCREEN:
+1. Open app.py in Notepad
+2. Point to @app.route lines (scroll down)
+3. Open db_config.py in Notepad
+4. Point to get_connection() function
+5. Show the Oracle connection string
 
 ============================================================
 PART 3: STUDENT INTERFACE (2:30 - 4:30)
@@ -248,9 +257,9 @@ successfully demonstrates:
 5. University can manage everything
 6. Database connection is working properly
 
-The website is built with Python Flask and SQLite database.
-The database schema matches our Oracle design with 6 tables
-in Third Normal Form (3NF).
+The website is built with Python Flask and Oracle database.
+The database has 6 tables in Third Normal Form (3NF).
+Connected using cx_Oracle library with proper credentials.
 
 Thank you for watching.
 This is Group 7, Section A.
@@ -266,9 +275,9 @@ shofolbhabe protisthapon koreche:
 5. University shob kichhu porichalon korte pare
 6. Database connection shofol choleche
 
-Website-ti Python Flask ebong SQLite database diye toiri.
-Database schema amader Oracle design-er sathe mil ache
-6-ti table Third Normal Form (3NF) e.
+Website-ti Python Flask ebong Oracle database diye toiri.
+Database-e 6-ti table Third Normal Form (3NF) e ache.
+cx_Oracle library diye shothik credentials connection kora hoyeche.
 
 Dhonnobad dekh ar jonno.
 Ei hocche Group 7, Section A.
