@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Coordinator Dashboard - Student Exchange System{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div>
+        <h2>Welcome, {{ session.name }}!</h2>
+        <p style="color: #aaa;">Coordinator Dashboard</p>
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+
+<!-- Statistics -->
+<div class="stats">
+    {% set pending = applications|selectattr('2', 'equalto', 'Pending')|list|length %}
+    {% set approved = applications|selectattr('2', 'equalto', 'Approved')|list|length %}
+    {% set rejected = applications|selectattr('2', 'equalto', 'Rejected')|list|length %}
+    <div class="stat-card">
+        <h3>{{ applications|length }}</h3>
+        <p>Total Applications</p>
+    </div>
+    <div class="stat-card">
+        <h3 style="color: #ffc107;">{{ pending }}</h3>
+        <p>Pending</p>
+    </div>
+    <div class="stat-card">
+        <h3 style="color: #28a745;">{{ approved }}</h3>
+        <p>Approved</p>
+    </div>
+    <div class="stat-card">
+        <h3 style="color: #dc3545;">{{ rejected }}</h3>
+        <p>Rejected</p>
+    </div>
+</div>
+
+<!-- Applications to Review -->
+<div class="card">
+    <h2>Applications to Review</h2>
+    {% if applications %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Department</th>
+                <th>CGPA</th>
+                <th>Program</th>
+                <th>University</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app[3] }}</td>
+                <td>{{ app[4] }}</td>
+                <td>{{ app[5] }}</td>
+                <td>{{ app[8] }}</td>
+                <td>{{ app[10] }}</td>
+                <td>{{ app[1] }}</td>
+                <td><span class="status {{ app[2]|lower }}">{{ app[2] }}</span></td>
+                <td>
+                    {% if app[2] == 'Pending' %}
+                    <div class="actions">
+                        <form method="POST" action="{{ url_for('update_status', app_id=app[0]) }}" style="display: inline;">
+                            <input type="hidden" name="status" value="Approved">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('update_status', app_id=app[0]) }}" style="display: inline;">
+                            <input type="hidden" name="status" value="Rejected">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <span style="color: #aaa;">{{ app[2] }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #aaa; text-align: center; padding: 2rem;">No applications to review.</p>
+    {% endif %}
+</div>
+
+<!-- My Programs -->
+<div class="card">
+    <h2>My Assigned Programs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>Semester</th>
+                <th>Duration</th>
+                <th>Max Students</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prog in programs %}
+            <tr>
+                <td>{{ prog[3] }}</td>
+                <td>{{ prog[1] }}</td>
+                <td>{{ prog[2] }} weeks</td>
+                <td>{{ prog[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

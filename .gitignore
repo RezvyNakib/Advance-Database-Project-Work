@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.db
+*.db-journal
+error*.html
+error*.txt
+flask_*.txt
+test_*.py
+test_*.html
+test_*.txt
+stdout.txt
+stderr.txt
+output.txt

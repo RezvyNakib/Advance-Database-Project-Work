@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - Student Exchange System{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div>
+        <h2>Welcome, {{ session.name }}!</h2>
+        <p style="color: #aaa;">Student Dashboard</p>
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+
+<!-- My Applications -->
+<div class="card">
+    <h2>My Applications ({{ applications|length }})</h2>
+    {% if applications %}
+    <table>
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>University</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app[4] }}</td>
+                <td>{{ app[5] }}</td>
+                <td>{{ app[1] }}</td>
+                <td><span class="status {{ app[2]|lower }}">{{ app[2] }}</span></td>
+                <td>
+                    {% if app[2] == 'Pending' %}
+                    <a href="{{ url_for('cancel_application', app_id=app[0]) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Cancel this application?')">Cancel</a>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #aaa; text-align: center; padding: 2rem;">No applications yet. Apply below!</p>
+    {% endif %}
+</div>
+
+<!-- Available Programs -->
+<div class="card">
+    <h2>Available Exchange Programs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>University</th>
+                <th>Semester</th>
+                <th>Duration</th>
+                <th>Max Students</th>
+                <th>Coordinator</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prog in programs %}
+            <tr>
+                <td>{{ prog[3] }}</td>
+                <td>{{ prog[5] }}</td>
+                <td>{{ prog[1] }}</td>
+                <td>{{ prog[2] }} weeks</td>
+                <td>{{ prog[4] }}</td>
+                <td>{{ prog[6] if prog[6] else 'Not Assigned' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('apply_program') }}" style="display: inline;">
+                        <input type="hidden" name="program_id" value="{{ prog[0] }}">
+                        <button type="submit" class="btn btn-primary btn-sm"
+                                onclick="return confirm('Apply to {{ prog[3] }}?')">Apply</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

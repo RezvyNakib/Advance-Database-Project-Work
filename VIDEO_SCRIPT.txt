@@ -1,0 +1,138 @@
+============================================================
+    VIDEO DEMO SCRIPT - 10 MINUTES
+    Student Exchange Program Management System
+    Group 7, Section A, Summer 2025-2026
+============================================================
+
+--------------------------------------------------------------
+SECOND 0:00 - 1:00  |  INTRODUCTION
+--------------------------------------------------------------
+Ki bolben:
+"Assalamu Alaikum. We are Group 7 from Section A.
+Our project is Student Exchange Program Management System.
+Course Teacher: JUENA AHMED NOSHIN.
+Group Members: Md Rezvine Enjoy Nakib, MST Nusrat Jahan Nijhum,
+Md Mahay Alam Hasib, Sani Alam.
+Today we will demonstrate our website and database connection."
+
+Ki dekhabe: Homepage (http://localhost:5000)
+
+--------------------------------------------------------------
+SECOND 1:00 - 2:00  |  DATABASE SHOW
+--------------------------------------------------------------
+Ki bolben:
+"Let me show you our database. We have 6 tables:
+University, Coordinator, Exchange_Program,
+Student, Student_Phone, and Application.
+All tables are connected with foreign keys."
+
+Ki dekhabe:
+1. Click "Database" link in navigation
+2. Scroll down to show all 6 tables
+3. Point to each table name
+
+Link: http://localhost:5000/database
+
+--------------------------------------------------------------
+SECOND 2:00 - 4:00  |  ADD STUDENT DEMO
+--------------------------------------------------------------
+Ki bolben:
+"Now I will add a new student to the system.
+Please watch - the data will be stored in the database."
+
+Steps:
+1. Click "Students" in navigation
+2. Click "+ Add Student" button
+3. Fill the form:
+   - Name: Md Rezvine Enjoy Nakib
+   - Department: CSE
+   - CGPA: 3.75
+   - Email: rezvy@aiub.edu
+   - Phone: 01796585024
+4. Click "Add Student" button
+5. Show the student appears in the table
+
+Link: http://localhost:5000/student/add
+
+--------------------------------------------------------------
+SECOND 4:00 - 5:30  |  ADD UNIVERSITY & COORDINATOR
+--------------------------------------------------------------
+Ki bolben:
+"Now let me add a partner university and coordinator."
+
+Steps - University:
+1. Click "Universities"
+2. Click "+ Add University"
+3. Fill: AIUB, Bangladesh, Kuratoli, Dhaka
+4. Click "Add University"
+
+Steps - Coordinator:
+1. Click "Coordinators"
+2. Click "+ Add Coordinator"
+3. Fill: Dr. Ahmed, ahmed@aiub.edu, 01700000000, select AIUB
+4. Click "Add Coordinator"
+
+Links:
+http://localhost:5000/university/add
+http://localhost:5000/coordinator/add
+
+--------------------------------------------------------------
+SECOND 5:30 - 7:00  |  APPLICATION DEMO
+--------------------------------------------------------------
+Ki bolben:
+"A student can apply to an exchange program.
+Let me submit a new application."
+
+Steps:
+1. Click "Applications"
+2. Click "+ New Application"
+3. Select Student from dropdown
+4. Select Program from dropdown
+5. Click "Submit Application"
+6. Show status is "Pending"
+
+Link: http://localhost:5000/applications/add
+
+--------------------------------------------------------------
+SECOND 7:00 - 8:30  |  APPROVE/REJECT APPLICATION
+--------------------------------------------------------------
+Ki bolben:
+"The coordinator can approve or reject applications.
+Let me approve a pending application."
+
+Steps:
+1. Find a Pending application
+2. Click "Change Status" dropdown
+3. Select "Approve"
+4. Show status changes to "Approved"
+
+Link: http://localhost:5000/applications
+
+--------------------------------------------------------------
+SECOND 8:30 - 9:30  |  CODE SHOW
+--------------------------------------------------------------
+Ki bolben:
+"This is our Python Flask code.
+The app.py file contains all routes.
+The db_config.py file connects to the database.
+Each page reads data from the database and displays it."
+
+Ki dekhabe:
+1. Show app.py file (open in Notepad)
+2. Point to @app.route lines
+3. Show db_config.py
+4. Point to get_connection() function
+
+--------------------------------------------------------------
+SECOND 9:30 - 10:00  |  CONCLUSION
+--------------------------------------------------------------
+Ki bolben:
+"In conclusion, our Student Exchange Program Management System
+successfully manages universities, coordinators,
+exchange programs, students, and applications.
+The website is connected to the database.
+Thank you for watching."
+
+============================================================
+    END OF VIDEO SCRIPT
+============================================================

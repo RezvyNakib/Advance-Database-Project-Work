@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Coordinator - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Add New Coordinator</h2>
+    
+    <form method="POST" action="{{ url_for('add_coordinator') }}">
+        <div class="form-group">
+            <label>Coordinator Name</label>
+            <input type="text" name="name" required placeholder="Dr. John Smith">
+        </div>
+        
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required placeholder="coordinator@university.edu">
+        </div>
+        
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" placeholder="+1-416-978-2011">
+        </div>
+        
+        <div class="form-group">
+            <label>University</label>
+            <select name="uni_id" required>
+                <option value="">Select University</option>
+                {% for uni in universities %}
+                <option value="{{ uni[0] }}">{{ uni[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Add Coordinator</button>
+        <a href="{{ url_for('coordinator_dashboard') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

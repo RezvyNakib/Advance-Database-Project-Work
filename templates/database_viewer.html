@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Database Viewer - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2>Database Viewer</h2>
+            <p style="color: #aaa; margin-top: 0.3rem;">student_exchange.db - 6 Tables | SQLite</p>
+        </div>
+        <div style="background: rgba(0,212,255,0.2); padding: 0.5rem 1rem; border-radius: 8px;">
+            Connected
+        </div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem;">
+    <!-- Sidebar: Table List -->
+    <div class="card" style="padding: 1rem;">
+        <h3 style="color: #00d4ff; margin-bottom: 1rem; font-size: 1rem;">Tables ({{ tables|length }})</h3>
+        {% for table_name, data in tables.items() %}
+        <a href="#table-{{ table_name }}" style="display: block; padding: 0.6rem 0.8rem; color: #ccc; text-decoration: none; border-radius: 5px; margin-bottom: 0.3rem; font-size: 0.9rem; transition: 0.3s;"
+           onmouseover="this.style.background='rgba(0,212,255,0.1)'"
+           onmouseout="this.style.background='transparent'">
+            <span style="color: #00d4ff;">&#9656;</span> {{ table_name }}
+            <span style="float: right; background: rgba(255,255,255,0.1); padding: 0.1rem 0.5rem; border-radius: 10px; font-size: 0.75rem;">{{ data.rows|length }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Main: Tables -->
+    <div>
+        {% for table_name, data in tables.items() %}
+        <div class="card" id="table-{{ table_name }}" style="scroll-margin-top: 80px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="color: #00d4ff; font-size: 1.2rem;">
+                    {{ table_name }}
+                </h3>
+                <span style="color: #aaa; font-size: 0.85rem;">
+                    {{ data.rows|length }} rows | {{ data.columns|length }} columns
+                </span>
+            </div>
+
+            <!-- Column Info -->
+            <div style="margin-bottom: 1rem; padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 0.85rem;">
+                <strong style="color: #00d4ff;">Columns:</strong>
+                {% for col in data.columns %}
+                <span style="background: rgba(0,212,255,0.15); padding: 0.2rem 0.6rem; border-radius: 4px; margin: 0.2rem; display: inline-block;">{{ col }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Data Table -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 0.6rem; background: rgba(0,212,255,0.2); color: #00d4ff; text-align: left; border-bottom: 2px solid rgba(0,212,255,0.3);">#</th>
+                            {% for col in data.columns %}
+                            <th style="padding: 0.6rem; background: rgba(0,212,255,0.2); color: #00d4ff; text-align: left; border-bottom: 2px solid rgba(0,212,255,0.3);">{{ col }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data.rows %}
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td style="padding: 0.5rem 0.6rem; color: #666; font-size: 0.8rem;">{{ loop.index }}</td>
+                            {% for cell in row %}
+                            <td style="padding: 0.5rem 0.6rem; color: #ddd;">
+                                {% if cell is none %}
+                                <span style="color: #666; font-style: italic;">NULL</span>
+                                {% elif cell is string and cell.startswith('20') %}
+                                <span style="color: #ffc107;">{{ cell }}</span>
+                                {% elif cell is number and cell > 4 %}
+                                <span style="color: #28a745;">{{ cell }}</span>
+                                {% else %}
+                                {{ cell }}
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

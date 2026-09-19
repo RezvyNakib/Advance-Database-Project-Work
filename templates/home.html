@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Student Exchange Program Management System</h1>
+    <p>Manage universities, exchange programs, coordinators, students and applications</p>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>{{ student_count }}</h3>
+        <p>Students</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ uni_count }}</h3>
+        <p>Universities</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ prog_count }}</h3>
+        <p>Programs</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ app_count }}</h3>
+        <p>Applications</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>About the System</h2>
+    <p>This system manages the complete lifecycle of student exchange programs:</p>
+    <ul style="margin-top: 1rem; padding-left: 1.5rem; color: #aaa;">
+        <li>Register and manage partner universities</li>
+        <li>Add coordinators for each university</li>
+        <li>Create exchange programs with capacity limits</li>
+        <li>Students can apply to multiple programs</li>
+        <li>Coordinators can approve/reject applications</li>
+        <li>Track application status in real-time</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Quick Actions</h2>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="{{ url_for('add_student') }}" class="btn btn-primary">Add Student</a>
+        <a href="{{ url_for('add_university') }}" class="btn btn-primary">Add University</a>
+        <a href="{{ url_for('add_program') }}" class="btn btn-primary">Add Program</a>
+        <a href="{{ url_for('add_application') }}" class="btn btn-primary">Submit Application</a>
+    </div>
+</div>
+{% endblock %}

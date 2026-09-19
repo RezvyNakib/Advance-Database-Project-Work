@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Applications - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Applications</h2>
+        <a href="{{ url_for('add_application') }}" class="btn btn-primary">+ New Application</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>App ID</th>
+                <th>Student</th>
+                <th>Program</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app[0] }}</td>
+                <td>{{ app[3] }}</td>
+                <td>{{ app[4] }}</td>
+                <td>{{ app[1] }}</td>
+                <td>
+                    <span class="status {{ app[2]|lower }}">{{ app[2] }}</span>
+                </td>
+                <td class="actions">
+                    {% if app[2] == 'Pending' %}
+                    <form method="POST" action="{{ url_for('update_application', id=app[0]) }}" style="display: inline;">
+                        <select name="status" onchange="this.form.submit()" style="padding: 0.3rem; border-radius: 5px; background: #333; color: #fff; border: 1px solid #555;">
+                            <option value="">Change Status</option>
+                            <option value="Approved">Approve</option>
+                            <option value="Rejected">Reject</option>
+                        </select>
+                    </form>
+                    {% endif %}
+                    <a href="{{ url_for('delete_application', id=app[0]) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

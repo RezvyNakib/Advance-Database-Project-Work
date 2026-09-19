@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Programs - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Exchange Programs</h2>
+        <a href="{{ url_for('add_program') }}" class="btn btn-primary">+ Add Program</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Field of Study</th>
+                <th>Semester</th>
+                <th>Duration (weeks)</th>
+                <th>Max Students</th>
+                <th>University</th>
+                <th>Coordinator</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prog in programs %}
+            <tr>
+                <td>{{ prog[0] }}</td>
+                <td>{{ prog[3] }}</td>
+                <td>{{ prog[1] }}</td>
+                <td>{{ prog[2] }}</td>
+                <td>{{ prog[4] }}</td>
+                <td>{{ prog[5] }}</td>
+                <td>{{ prog[6] if prog[6] else 'Not Assigned' }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('delete_program', id=prog[0]) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

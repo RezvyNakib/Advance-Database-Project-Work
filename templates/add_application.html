@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}New Application - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Submit New Application</h2>
+    
+    <form method="POST" action="{{ url_for('add_application') }}">
+        <div class="form-group">
+            <label>Select Student</label>
+            <select name="student_id" required>
+                <option value="">Choose Student</option>
+                {% for student in students %}
+                <option value="{{ student[0] }}">{{ student[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Select Exchange Program</label>
+            <select name="program_id" required>
+                <option value="">Choose Program</option>
+                {% for prog in programs %}
+                <option value="{{ prog[0] }}">{{ prog[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+        <a href="{{ url_for('application_dashboard') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

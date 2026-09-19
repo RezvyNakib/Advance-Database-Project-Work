@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}University Dashboard - Student Exchange System{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div>
+        <h2>Welcome, {{ session.name }}!</h2>
+        <p style="color: #aaa;">University Dashboard - Full Control</p>
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+
+<!-- Statistics -->
+<div class="stats">
+    {% set pending = applications|selectattr('2', 'equalto', 'Pending')|list|length %}
+    {% set approved = applications|selectattr('2', 'equalto', 'Approved')|list|length %}
+    <div class="stat-card">
+        <h3>{{ coordinators|length }}</h3>
+        <p>Coordinators</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ programs|length }}</h3>
+        <p>Programs</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ applications|length }}</h3>
+        <p>Total Applications</p>
+    </div>
+    <div class="stat-card">
+        <h3 style="color: #ffc107;">{{ pending }}</h3>
+        <p>Pending</p>
+    </div>
+</div>
+
+<!-- Manage Coordinators -->
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Manage Coordinators</h2>
+        <button onclick="document.getElementById('addCoordForm').style.display='block'" class="btn btn-primary">+ Add Coordinator</button>
+    </div>
+
+    <!-- Add Coordinator Form (Hidden by default) -->
+    <div id="addCoordForm" style="display: none; margin-top: 1rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 10px;">
+        <h3 style="margin-bottom: 1rem;">Add New Coordinator</h3>
+        <form method="POST" action="{{ url_for('add_coordinator') }}">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="Dr. Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="email@uni.edu">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone" placeholder="+1-xxx-xxx-xxxx">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required placeholder="Choose username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required placeholder="Choose password">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Add Coordinator</button>
+            <button type="button" onclick="document.getElementById('addCoordForm').style.display='none'" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+
+    {% if coordinators %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coord in coordinators %}
+            <tr>
+                <td>{{ coord[1] }}</td>
+                <td>{{ coord[2] }}</td>
+                <td>{{ coord[3] }}</td>
+                <td>{{ coord[4] }}</td>
+                <td>
+                    <a href="{{ url_for('delete_coordinator', coord_id=coord[0]) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Remove this coordinator?')">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #aaa; text-align: center; padding: 1rem;">No coordinators assigned yet.</p>
+    {% endif %}
+</div>
+
+<!-- Manage Programs -->
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Exchange Programs</h2>
+        <button onclick="document.getElementById('addProgForm').style.display='block'" class="btn btn-primary">+ Add Program</button>
+    </div>
+
+    <!-- Add Program Form (Hidden by default) -->
+    <div id="addProgForm" style="display: none; margin-top: 1rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 10px;">
+        <h3 style="margin-bottom: 1rem;">Add New Program</h3>
+        <form method="POST" action="{{ url_for('add_program') }}">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label>Field of Study</label>
+                    <input type="text" name="field" required placeholder="e.g., Computer Science">
+                </div>
+                <div class="form-group">
+                    <label>Semester</label>
+                    <select name="semester" required>
+                        <option value="Fall 2026">Fall 2026</option>
+                        <option value="Spring 2027">Spring 2027</option>
+                        <option value="Summer 2027">Summer 2027</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Duration (weeks)</label>
+                    <input type="number" name="duration" min="1" required placeholder="16">
+                </div>
+                <div class="form-group">
+                    <label>Max Students</label>
+                    <input type="number" name="max_students" min="1" required placeholder="25">
+                </div>
+                <div class="form-group">
+                    <label>Assign Coordinator</label>
+                    <select name="coord_id">
+                        <option value="">Select Coordinator</option>
+                        {% for coord in coordinators %}
+                        <option value="{{ coord[0] }}">{{ coord[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Add Program</button>
+            <button type="button" onclick="document.getElementById('addProgForm').style.display='none'" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>Semester</th>
+                <th>Duration</th>
+                <th>Max Students</th>
+                <th>Coordinator</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prog in programs %}
+            <tr>
+                <td>{{ prog[3] }}</td>
+                <td>{{ prog[1] }}</td>
+                <td>{{ prog[2] }} weeks</td>
+                <td>{{ prog[4] }}</td>
+                <td>{{ prog[5] if prog[5] else 'Not Assigned' }}</td>
+                <td>
+                    <a href="{{ url_for('delete_program', prog_id=prog[0]) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this program?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- All Applications -->
+<div class="card">
+    <h2>All Applications</h2>
+    {% if applications %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Department</th>
+                <th>CGPA</th>
+                <th>Program</th>
+                <th>Coordinator</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app[3] }}</td>
+                <td>{{ app[4] }}</td>
+                <td>{{ app[5] }}</td>
+                <td>{{ app[7] }}</td>
+                <td>{{ app[9] }}</td>
+                <td>{{ app[1] }}</td>
+                <td><span class="status {{ app[2]|lower }}">{{ app[2] }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #aaa; text-align: center; padding: 2rem;">No applications yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

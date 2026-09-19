@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Program - Student Exchange System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Add New Exchange Program</h2>
+    
+    <form method="POST" action="{{ url_for('add_program') }}">
+        <div class="form-group">
+            <label>Field of Study</label>
+            <input type="text" name="field" required placeholder="e.g., Computer Science">
+        </div>
+        
+        <div class="form-group">
+            <label>Semester</label>
+            <select name="semester" required>
+                <option value="">Select Semester</option>
+                <option value="Fall 2026">Fall 2026</option>
+                <option value="Spring 2027">Spring 2027</option>
+                <option value="Summer 2027">Summer 2027</option>
+                <option value="Fall 2027">Fall 2027</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Duration (weeks)</label>
+            <input type="number" name="duration" min="1" required placeholder="e.g., 16">
+        </div>
+        
+        <div class="form-group">
+            <label>Max Students</label>
+            <input type="number" name="max_students" min="1" required placeholder="e.g., 25">
+        </div>
+        
+        <div class="form-group">
+            <label>University</label>
+            <select name="uni_id" required>
+                <option value="">Select University</option>
+                {% for uni in universities %}
+                <option value="{{ uni[0] }}">{{ uni[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Coordinator (Optional)</label>
+            <select name="coord_id">
+                <option value="">Select Coordinator</option>
+                {% for coord in coordinators %}
+                <option value="{{ coord[0] }}">{{ coord[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Add Program</button>
+        <a href="{{ url_for('program_dashboard') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}
